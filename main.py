@@ -2,72 +2,58 @@ import os
 import cv2
 import json
 from datetime import datetime
+from detectors.jewelry_detector import JewelryDetector
+from trackers.jewelry_tracker import JewelryTracker
 
-from models.hand_tracker import HandTracker
-from detectors.ring_detector import RingDetector
+# === Config ===
+MODEL_PATH = "runs/detect/train/weights/best.pt"
+CLASS_NAMES = ['Bracelets', 'Brooches', 'belt', 'earring', 'maangtika',
+               'necklace', 'nose ring', 'ring', 'tiara']
 
-# === Paths ===
-INPUT_DIR = "data/test/images"
-OUTPUT_DIR = "output/results"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+INPUT_DIR = "data/test"
+OUTPUT_IMG_DIR = "output/results"
+OUTPUT_JSON_DIR = "output/json"
+os.makedirs(OUTPUT_IMG_DIR, exist_ok=True)
+os.makedirs(OUTPUT_JSON_DIR, exist_ok=True)
 
-# === Init Models ===
-tracker = HandTracker(max_num_hands=1)
-ring_detector = RingDetector(model_path="runs/detect/train/weights/best.pt")  # update path if needed
+# === Init models ===
+detector = JewelryDetector(model_path=MODEL_PATH, class_names=CLASS_NAMES)
+tracker = JewelryTracker()
 
-# === Run on all test images ===
+# === Run detection + tracking ===
 for filename in os.listdir(INPUT_DIR):
     if filename.lower().endswith(('.jpg', '.png', '.jpeg')):
         image_path = os.path.join(INPUT_DIR, filename)
         image = cv2.imread(image_path)
 
-        # 1. Detect hand landmarks
-        landmarks = tracker.process_image(image)
-        image = tracker.draw_landmarks(image, landmarks)
+        detections = detector.detect(image)
+        tracked = tracker.update(detections, image)
 
-        # 2. Detect rings
-        detections = ring_detector.detect_rings(image)
-
-        # 3. Draw ring detections
-        for det in detections:
-            x1, y1, x2, y2 = det['bbox']
-            conf = det['confidence']
-            cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
-            cv2.putText(image, f"Ring {conf:.2f}", (x1, y1 - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
-
-        # # 4. Save output
-        # output_path = os.path.join(OUTPUT_DIR, filename)
-        # cv2.imwrite(output_path, image)
-        # print(f"[✓] Processed: {filename} → {output_path}")
-        
-        # 4. Save detection data to JSON
         json_data = {
-            "image_name": filename,
+            "image": filename,
             "timestamp": datetime.now().isoformat(),
-            "hand_landmarks": [],
-            "ring_detections": []
+            "detections": []
         }
 
-        for hand in landmarks:
-            json_data["hand_landmarks"].append([
-                {"x": x, "y": y} for (x, y) in hand
-            ])
-
-        for det in detections:
-            x1, y1, x2, y2 = det['bbox']
-            json_data["ring_detections"].append({
-                "bbox": [x1, y1, x2, y2],
-                "confidence": det["confidence"]
+        for obj in tracked:
+            x1, y1, x2, y2 = obj['bbox']
+            cls_name = obj['class_name']
+            track_id = obj['track_id']
+            json_data["detections"].append({
+                "class_name": cls_name,
+                "track_id": track_id,
+                "bbox": [x1, y1, x2, y2]
             })
 
-        # Write JSON
-        json_path = os.path.join("output/json", filename.rsplit('.', 1)[0] + ".json")
-        with open(json_path, 'w') as f:
+            # Draw
+            label = f"{cls_name} ID {track_id}"
+            cv2.rectangle(image, (x1, y1), (x2, y2), (0, 200, 255), 2)
+            cv2.putText(image, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (0, 200, 255), 2)
+
+        # Save image + JSON
+        cv2.imwrite(os.path.join(OUTPUT_IMG_DIR, filename), image)
+        with open(os.path.join(OUTPUT_JSON_DIR, filename.rsplit('.', 1)[0] + '.json'), 'w') as f:
             json.dump(json_data, f, indent=4)
 
-        # Save image
-        output_path = os.path.join(OUTPUT_DIR, filename)
-        cv2.imwrite(output_path, image)
-        print(f"[✓] Processed: {filename} → Image + JSON saved")
-
+        print(f"[✓] Processed: {filename}")
