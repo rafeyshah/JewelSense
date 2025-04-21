@@ -3,3 +3,6 @@
 runs
 data
 artifacts
+output
+
+__pycache__
