@@ -1,5 +1,8 @@
 import os
 import cv2
+import json
+from datetime import datetime
+
 from models.hand_tracker import HandTracker
 from detectors.ring_detector import RingDetector
 
@@ -33,7 +36,38 @@ for filename in os.listdir(INPUT_DIR):
             cv2.putText(image, f"Ring {conf:.2f}", (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
 
-        # 4. Save output
+        # # 4. Save output
+        # output_path = os.path.join(OUTPUT_DIR, filename)
+        # cv2.imwrite(output_path, image)
+        # print(f"[✓] Processed: {filename} → {output_path}")
+        
+        # 4. Save detection data to JSON
+        json_data = {
+            "image_name": filename,
+            "timestamp": datetime.now().isoformat(),
+            "hand_landmarks": [],
+            "ring_detections": []
+        }
+
+        for hand in landmarks:
+            json_data["hand_landmarks"].append([
+                {"x": x, "y": y} for (x, y) in hand
+            ])
+
+        for det in detections:
+            x1, y1, x2, y2 = det['bbox']
+            json_data["ring_detections"].append({
+                "bbox": [x1, y1, x2, y2],
+                "confidence": det["confidence"]
+            })
+
+        # Write JSON
+        json_path = os.path.join("output/json", filename.rsplit('.', 1)[0] + ".json")
+        with open(json_path, 'w') as f:
+            json.dump(json_data, f, indent=4)
+
+        # Save image
         output_path = os.path.join(OUTPUT_DIR, filename)
         cv2.imwrite(output_path, image)
-        print(f"[✓] Processed: {filename} → {output_path}")
+        print(f"[✓] Processed: {filename} → Image + JSON saved")
+
