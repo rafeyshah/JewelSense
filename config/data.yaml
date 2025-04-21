@@ -1,0 +1,13 @@
+train: C:/Users/syeda/Documents/Code/data-science/jewelry-tracking/data/train/images
+val: C:/Users/syeda/Documents/Code/data-science/jewelry-tracking/data/valid/images
+test: C:/Users/syeda/Documents/Code/data-science/jewelry-tracking/data/test/images
+
+nc: 9
+names: ['Bracelets', 'Brooches', 'belt', 'earring', 'maangtika', 'necklace', 'nose ring', 'ring', 'tiara']
+
+roboflow:
+  workspace: rafeyshah
+  project: jewellery_detect-iwird
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/rafeyshah/jewellery_detect-iwird/dataset/1
