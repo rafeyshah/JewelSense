@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 
 class HandTracker:
-    def __init__(self, max_num_hands=1, detection_confidence=0.7, tracking_confidence=0.6):
+    def __init__(self, max_num_hands=2, detection_confidence=0.7, tracking_confidence=0.6):
         self.max_num_hands = max_num_hands
         self.hands = mp.solutions.hands.Hands(
             static_image_mode=True,
@@ -25,6 +25,7 @@ class HandTracker:
                     for lm in hand_landmarks.landmark
                 ]
                 landmarks.append(hand_coords)
+            print(f"[✓] {len(results.multi_hand_landmarks)} hand(s) detected")
 
         return landmarks
 
