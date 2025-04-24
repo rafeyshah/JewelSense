@@ -24,6 +24,7 @@ This project is an end-to-end AI pipeline designed to detect, track, search, and
   - Novel view synthesis not implemented
   - No complete 3D rig/model of hand or body
 
+📄 For a detailed breakdown of tools, methodology, failures, and future scope, please refer to the [Design Document](design_doc.md).
 
 ## ✅ Completed Milestones
 
