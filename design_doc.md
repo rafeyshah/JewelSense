@@ -1,7 +1,5 @@
 # 📐 Design Document – Jewelry Tracking AI
 
----
-
 ## 🔍 Project Overview
 
 This project implements a modular, end-to-end AI system for detecting, tracking, segmenting, and visualizing jewelry items — specifically **rings**, **earrings**, and **dresses** — with added support for **3D modeling and augmented try-on visualizations**.
@@ -25,7 +23,6 @@ The system combines hand landmark tracking (MediaPipe), object detection (YOLOv8
 - 3D hand landmarks are derived from MediaPipe
 - Outputs include annotated images, overlays, and mesh exports
 
----
 
 ## 📦 Dataset Sources
 
@@ -34,7 +31,6 @@ The system combines hand landmark tracking (MediaPipe), object detection (YOLOv8
 
 Both datasets were YOLOv8 formatted and used for training a 3-class detection model.
 
----
 
 ## 🛠️ Tools & Frameworks
 
@@ -50,8 +46,6 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 | Matplotlib | Chosen for its straightforward integration and visualization capabilities, especially useful for overlaying 3D meshes onto images.                          |
 | PIL/OpenCV | Employed for versatile image processing functionalities, offering ease of use, broad compatibility, and robust performance for image manipulation tasks.    |
 
-
----
 
 
 ## 🚦 Implementation Phases
@@ -74,7 +68,6 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 - Ring mesh exported (.obj/.ply) for use in Blender/WebGL
 - Matplotlib + PIL used for overlay visualization
 
----
 
 ## ⚠️ Documented Failures & Fixes
 
@@ -86,7 +79,6 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 | ❌ Blank overlay due to incorrect image coordinate transform | ✅ Corrected Y-axis orientation to match OpenCV coordinate system      |
 | ❌ MediaPipe failed on some hand poses                       | ✅ Enabled `static_image_mode=True` to ensure frame-by-frame detection |
 
----
 
 ## Experimental Failures and Decisions
 - Novel view synthesis methods (NeRF) were too computationally intensive; deprioritized for immediate development.
@@ -103,7 +95,6 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 - Does not include detailed clustering or novel view synthesis.
 - Lacks comprehensive 3D hand/body rigging.
 
----
 
 ## ✅ Final Achievements
 
@@ -113,7 +104,6 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 - Exportable ring meshes for Blender/Web-based try-on
 - Modular pipeline: easy to extend for earrings/dress segmentation
 
----
 
 ## 🔜 Future Work
 
@@ -125,7 +115,6 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 | Build Streamlit or WebGL ring try-on app   | High     |
 | Integrate LLM for tag-to-style suggestions | Medium   |
 
----
 
 ## 📄 Conclusion
 

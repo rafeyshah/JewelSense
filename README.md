@@ -15,7 +15,6 @@ This project is an end-to-end AI pipeline designed to detect, track, search, and
 - 📦 Export `.obj`/`.ply` files of ring placements for 3D tools (Blender, WebGL)
 - ✅ Professional, modular, and clean codebase with full documentation
 
----
 
 ## Project Scope and Limitations
 - Current implementation: Jewelry detection, segmentation, tracking, and basic 3D mesh fitting.
@@ -24,7 +23,6 @@ This project is an end-to-end AI pipeline designed to detect, track, search, and
   - Novel view synthesis not implemented
   - No complete 3D rig/model of hand or body
 
----
 
 ## ✅ Completed Milestones
 
@@ -43,7 +41,6 @@ This project is an end-to-end AI pipeline designed to detect, track, search, and
 | Documentation (README, Design Doc)          | ✅ Done  |
 | Code published to GitHub                    | ✅ Done  |
 
----
 
 ## 📂 Datasets Used
 
@@ -52,7 +49,6 @@ This project is an end-to-end AI pipeline designed to detect, track, search, and
 - Classes used: `ring`, `earring`, `dress`
 - Format: YOLOv8
 
----
 
 ## 🚀 How to Run
 
@@ -84,7 +80,6 @@ python fitting/fit_ring_mesh.py
 python visualization/overlay_ring_3d_on_image.py
 ```
 
----
 
 ## 📦 Folder Structure Snapshot
 
@@ -100,7 +95,6 @@ jewelry-tracking-ai/
 ├── README.md, design_doc.md    ← Documentation
 ```
 
----
 
 ## 🔜 Upcoming Features (Planned)
 
@@ -110,13 +104,11 @@ jewelry-tracking-ai/
 - 🌐 Web-based 3D viewer (Three.js / Streamlit)
 - 📲 Full AR preview & product try-on simulation
 
----
 
 ## 📄 License
 
 MIT — free to use, build on, and contribute.
 
----
 
 **Author**: Syed Abdul Rafey Ali 
 **Status**: 🎯 Production-ready with real-world & research use potential
