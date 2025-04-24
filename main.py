@@ -28,13 +28,20 @@ for filename in os.listdir(INPUT_DIR):
         image = cv2.imread(image_path)
 
         detections = detector.detect(image)
-        tracked = tracker.update(detections, image)
+        tracked = []
+        for det in detections:
+            det['track_id'] = 0  # Assign dummy ID
+            tracked.append(det)
+
 
         json_data = {
             "image": filename,
             "timestamp": datetime.now().isoformat(),
             "detections": []
         }
+
+        
+        # print(tracked)
 
         for obj in tracked:
             x1, y1, x2, y2 = obj['bbox']
