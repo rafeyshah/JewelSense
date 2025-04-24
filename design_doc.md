@@ -15,7 +15,7 @@ The system combines hand landmark tracking (MediaPipe), object detection (YOLOv8
 - Detect and track in both static images and videos
 - Localize and segment rings using SAM
 - Fit and align 3D ring meshes to finger joints
-- Blend 3D ring with real images for try-on visualizations
+- Blend 3D ring with real images for try-on visualizations ( working )
 
 ### Assumptions
 - YOLOv8 model trained on Roboflow datasets
@@ -41,7 +41,8 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 | DeepSORT   | Chosen for efficient multi-object tracking across frames, offering improved accuracy and consistency over SORT.                                             |
 | CLIP       | Employed for superior semantic visual similarity compared to traditional feature extraction methods (SIFT, SURF).                                           |
 | FAISS      | Utilized for high-performance similarity indexing and rapid retrieval of visual embeddings, outperforming simpler indexing methods like brute-force search. |
-| SAM        | Chosen for zero-shot segmentation flexibility compared to traditional segmentation methods like Mask R-CNN.                                                 |
+| SAM        | Chosen for zero-shot segmentation flexibility compared to traditional segmentation methods like Mask R-CNN. 
+| KMeans     | Used for unsupervised clustering of CLIP embeddings to identify visually similar styles across the dataset.             |                                                |
 | Open3D     | Selected for comprehensive and easy-to-use 3D mesh processing and visualization capabilities compared to alternatives like MeshLab.                         |
 | Matplotlib | Chosen for its straightforward integration and visualization capabilities, especially useful for overlaying 3D meshes onto images.                          |
 | PIL/OpenCV | Employed for versatile image processing functionalities, offering ease of use, broad compatibility, and robust performance for image manipulation tasks.    |

@@ -8,6 +8,7 @@ This project is an end-to-end AI pipeline designed to detect, track, search, and
 
 - 🖐️ Detect & track hands and rings with MediaPipe & YOLOv8
 - 🧠 Smart visual similarity search using CLIP (image & text prompts)
+- 📱 Unsupervised Style Clustering (CLIP + KMeans), discover hidden design grouping
 - 🌀 DeepSORT-based video tracking of jewelry
 - 🧊 Segment jewelry (rings) with SAM (Segment Anything)
 - 💍 Place and align 3D ring meshes on finger joints
@@ -32,6 +33,7 @@ This project is an end-to-end AI pipeline designed to detect, track, search, and
 | Hand joint detection (MediaPipe)            | ✅ Done  |
 | Video tracking with DeepSORT                | ✅ Done  |
 | CLIP-powered search                         | ✅ Done  |
+| Automatically group visually similar jewelry designs using CLIP embeddings and KMeans clustering | ✅ Done  |
 | Prompt-to-image retrieval                   | ✅ Done  |
 | SAM-based ring segmentation                 | ✅ Done  |
 | 3D ring placement using Open3D              | ✅ Done  |
@@ -80,6 +82,11 @@ python fitting/fit_ring_mesh.py
 python visualization/overlay_ring_3d_on_image.py
 ```
 
+### 6. Clip + KMeans
+```bash
+python clip_search/cluster_embeddings.py
+```
+
 
 ## 📦 Folder Structure Snapshot
 
@@ -87,7 +94,7 @@ python visualization/overlay_ring_3d_on_image.py
 jewelry-tracking-ai/
 ├── segmentation/               ← SAM ring mask generation
 ├── fitting/                    ← 3D mesh placement on finger joint
-├── clip_search/                ← CLIP similarity search
+├── clip_search/                ← CLIP similarity search & clustering
 ├── visualization/              ← Overlay 3D ring on 2D hand
 ├── detectors/, trackers/       ← YOLOv8 + DeepSORT
 ├── output/                     ← Rendered results, ring masks, meshes
