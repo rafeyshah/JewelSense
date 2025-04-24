@@ -2,6 +2,7 @@
 
 This project is an end-to-end AI pipeline designed to detect, track, search, and fit jewelry items — specifically **rings**, **earrings**, and **dresses** — using state-of-the-art computer vision, 3D modeling, and multimodal tools like CLIP and SAM. It now includes 3D mesh fitting and AR-style visualization of rings placed on hands.
 
+📄 For a detailed breakdown of tools, methodology, failures, and future scope, please refer to the [Design Document](design_doc.md).
 ---
 
 ## 📌 Project Features
