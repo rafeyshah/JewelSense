@@ -1,5 +1,8 @@
 import open3d as o3d
 import numpy as np
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from fitting.hand_pose_utils import extract_hand_landmarks
 
 # Load hand landmarks
