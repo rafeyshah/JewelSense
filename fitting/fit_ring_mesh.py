@@ -34,3 +34,14 @@ dot.paint_uniform_color([0.2, 0.8, 1.0])
 
 # Visualize
 o3d.visualization.draw_geometries([ring, dot])
+
+# Merge objects for export
+combined_mesh = ring + dot  # optional: just export ring
+
+# Save as OBJ
+o3d.io.write_triangle_mesh("output/masks/fitted_ring.obj", combined_mesh)
+print("✅ Exported fitted ring as OBJ to output/masks/fitted_ring.obj")
+
+# Optional: Save as GLTF (.glb)
+o3d.io.write_triangle_mesh("output/masks/fitted_ring.ply", combined_mesh)
+
