@@ -6,8 +6,7 @@ from trackers.jewelry_tracker import JewelryTracker
 
 def run_video_inference(video_path, output_path,
                         model_path="runs/detect/train/weights/best.pt"):
-    class_names = ['Bracelets', 'Brooches', 'belt', 'earring', 'maangtika',
-                   'necklace', 'nose ring', 'ring', 'tiara']
+    CLASS_NAMES = ['ring', 'earring', 'dress']
 
     cap = cv2.VideoCapture(video_path)
     detector = JewelryDetector(model_path=model_path, class_names=class_names)

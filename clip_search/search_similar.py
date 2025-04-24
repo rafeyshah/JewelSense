@@ -99,5 +99,5 @@ def search_by_text(prompt, index_path="clip_search/index", dataset_path="data/te
 
 if __name__ == "__main__":
     # Example
-    # search_similar("query.jpg")
-    search_by_text("Necklace and rings ")  # Text-based
+    search_similar("query.jpg") # Query by image
+    # search_by_text("Rings with black dresses ")  # Query by text

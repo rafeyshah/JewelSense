@@ -4,7 +4,7 @@
 
 ## 🔍 Project Overview
 
-This project implements an AI-powered system that detects, tracks, and retrieves jewelry items (rings, earrings, tiaras, etc.) from images and videos. The system combines real-time hand landmark detection, object detection, visual similarity search using CLIP, and deep tracking.
+This project implements an AI-powered system that detects, tracks, and retrieves jewelry items (rings, earrings, tiaras, dresses, etc.) from images and videos. The system combines real-time hand landmark detection, object detection, visual similarity search using CLIP, and deep tracking using DeepSORT.
 
 ---
 
@@ -17,9 +17,22 @@ This project implements an AI-powered system that detects, tracks, and retrieves
 - Designed to be extendable with 3D modeling, segmentation, and LLM integration
 
 ### Assumptions:
-- Roboflow dataset is labeled and in YOLOv8 format
-- Jewelry classes: ['Bracelets', 'Brooches', 'belt', 'earring', 'maangtika', 'necklace', 'nose ring', 'ring', 'tiara']
-- Inference should run on GPU (but works on CPU with slight slowdowns)
+- Roboflow datasets are labeled and exported in YOLOv8 format
+- Jewelry and fashion classes include: ['ring', 'earing', 'dress']
+- Environment: Google Colab + GPU support (or fallback to CPU)
+
+---
+
+## 📦 Dataset Details
+
+### Datasets Used:
+- [Jewellery Detection Dataset](https://universe.roboflow.com/mpstme-k5t7r/jewellery_detect/model/17)
+- [Dress Detection Dataset](https://universe.roboflow.com/jian-james-astrero/dress-dataset/dataset/4/download)
+
+### Integration:
+- Downloaded using Roboflow Python API
+- Automatically structured into `train`, `val`, and `test` sets
+- Used in a unified YOLOv8 training notebook (`train.ipynb`) hosted on Google Colab
 
 ---
 
@@ -28,71 +41,73 @@ This project implements an AI-powered system that detects, tracks, and retrieves
 | Tool           | Purpose                        | Why Chosen |
 |----------------|--------------------------------|------------|
 | MediaPipe      | Finger detection               | Fast, lightweight, 21 keypoint outputs |
-| YOLOv8         | Object detection               | SOTA performance, Roboflow-compatible |
-| DeepSORT       | Object tracking                | Robust, simple to integrate |
-| CLIP (OpenAI)  | Visual similarity search       | Multimodal (text & image) embedding |
-| FAISS          | Search indexing                | Scalable nearest-neighbor search |
-| Matplotlib     | Grid visualization             | Simple result viewing |
+| YOLOv8         | Object detection               | High accuracy, Roboflow-compatible |
+| DeepSORT       | Object tracking                | Maintains object ID across video |
+| CLIP (OpenAI)  | Visual/text similarity search  | Supports both images and prompts |
+| FAISS          | Search indexing                | High-speed nearest neighbor queries |
+| Matplotlib     | Visual result grid             | Simple, flexible |
+| Roboflow API   | Dataset access and management  | Easy download + class labeling |
 
 ---
 
 ## 🚦 Implementation Overview
 
 ### Phase 1 – Tracking
-- MediaPipe detects finger landmarks (21 per hand)
-- YOLOv8 detects jewelry bounding boxes (multi-class)
-- DeepSORT tracks jewelry across frames with consistent ID
-- Overlay visuals on both image and video outputs
+- MediaPipe detects hand landmarks (21 points)
+- YOLOv8 detects 9 jewelry/fashion classes
+- DeepSORT tracks jewelry across frames with consistent IDs
+- Overlay bounding boxes and landmarks for clarity
 
-### Phase 2 – Visual Search
-- Use CLIP to embed all dataset images into vector space
-- Use FAISS to build a searchable index
-- Implement both image-to-image and text-to-image similarity search
-- Display results in a grid with query and top matches
+### Phase 2 – Visual Similarity Search
+- CLIP used to embed all dataset images
+- FAISS index built from image embeddings
+- Visual + text query supported for similarity
+- Result display in grid format
 
 ### Phase 3 – (Planned)
-- Use SAM for fine-grained segmentation
-- Fit segmented rings to 3D hand mesh (MANO)
-- Enable AR-level try-on and positioning
+- Use SAM (Segment Anything) to isolate ring/dress
+- Fit 3D jewelry meshes (e.g., ring) onto hand model
+- Integrate Blender or Open3D for visualization
 
 ---
 
-## ⚠️ Known Issues & Failures – Documented
+## ⚠️ Known Issues & Fixes
 
-### ❌ MediaPipe missed hands in blurry frames
-- **Fix**: Switched from `static_image_mode=False` to `True` for consistent detection
+### ❌ MediaPipe missed hands in motion blur
+- ✅ Fix: Enabled `static_image_mode=True` to stabilize detection
 
-### ❌ DeepSORT returned unstable IDs when confidence was low
-- **Fix**: Tuned `max_age=30` and filtered low-confidence boxes in YOLOv8
+### ❌ DeepSORT IDs changed erratically on occlusion
+- ✅ Fix: Tuned tracker parameters and ignored low-confidence boxes
 
-### ❌ CLIP image search showed unrelated results for earrings
-- **Fix**: Limited search space to specific class (e.g., only “earring” images)
+### ❌ CLIP mismatched earrings and necklaces
+- ✅ Fix: Limited FAISS search scope per class (e.g., only “earrings”)
 
-### ❌ YOLOv8 confused “bracelet” vs. “ring” on hand
-- **Fix**: Augmented training set with more wrist/hand boundary examples
+### ❌ YOLOv8 confused bracelets and rings
+- ✅ Fix: Added more boundary-specific training samples
 
 ---
 
 ## 📈 Iterative Improvements
 
-- Started with ring-only detection → expanded to multi-class
-- First built image inference → expanded to video + tracking
-- Initially only image-based CLIP → added text-based search
-- Now ready for 3D modeling + segmentation
+- ✅ Started with ring-only detection → extended to multi-class jewelry + dress
+- ✅ Built inference for static images → scaled to video tracking
+- ✅ Initially image-only CLIP → added prompt-based search
+- 🔜 Next: 3D segmentation + mesh fitting using MediaPipe 3D & SAM
 
 ---
 
 ## ✅ Final Outcome
 
-- Modular project, easily extensible
-- Clean outputs (JSON, images, video)
-- Multimodal AI integration (CV + CLIP)
-- Great base for AR try-on, product recommendation, or ecommerce
+- Modular, documented AI system for jewelry detection and tracking
+- Visual + semantic search powered by CLIP
+- Ready for real-world use or academic portfolio
+- Easily extendable to AR try-on or ecommerce search
 
 ---
 
-## 📦 Next Steps
+## 🔮 Next Steps
 
-- Implement ring/dress segmentation using SAM
-- Load ring meshes in Blender + align with MediaPipe 3D
-- Deploy model with Streamlit or FastAPI frontend
+- Implement ring segmentation with SAM
+- Fit 3D meshes in Blender to match hand joints
+- Deploy via FastAPI/Streamlit interface
+- Add GPT/LLaVA integration for style-based recommendations

@@ -7,10 +7,11 @@ from trackers.jewelry_tracker import JewelryTracker
 
 # === Config ===
 MODEL_PATH = "runs/detect/train/weights/best.pt"
-CLASS_NAMES = ['Bracelets', 'Brooches', 'belt', 'earring', 'maangtika',
-               'necklace', 'nose ring', 'ring', 'tiara']
+CLASS_NAMES = ['ring', 'earring', 'dress']
 
-INPUT_DIR = "data/test"
+
+# INPUT_DIR = "data/test/iamges"
+INPUT_DIR = "data/"
 OUTPUT_IMG_DIR = "output/results"
 OUTPUT_JSON_DIR = "output/json"
 os.makedirs(OUTPUT_IMG_DIR, exist_ok=True)
