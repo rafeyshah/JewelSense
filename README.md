@@ -17,6 +17,15 @@ This project is an end-to-end AI pipeline designed to detect, track, search, and
 
 ---
 
+## Project Scope and Limitations
+- Current implementation: Jewelry detection, segmentation, tracking, and basic 3D mesh fitting.
+- Limitations:
+  - No comprehensive clustering
+  - Novel view synthesis not implemented
+  - No complete 3D rig/model of hand or body
+
+---
+
 ## ✅ Completed Milestones
 
 | Feature                                      | Status   |

@@ -38,19 +38,21 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 
 ## 🛠️ Tools & Frameworks
 
-| Tool          | Purpose                                 |
-|---------------|------------------------------------------|
-| YOLOv8        | Object detection                         |
-| MediaPipe     | 2D/3D hand landmark tracking             |
-| DeepSORT      | Object tracking over frames              |
-| CLIP          | Visual similarity search (image/text)    |
-| FAISS         | Fast similarity index                    |
-| SAM           | Jewelry segmentation                     |
-| Open3D        | 3D mesh generation & placement           |
-| Matplotlib    | 3D ring + image overlays                 |
-| PIL/OpenCV    | Image I/O and fusion                     |
+| Tool       | Rationale for Selection                                                                                                                                     |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| YOLOv8     | Selected for robust and real-time object detection capabilities compared to alternatives like SSD or Faster R-CNN.                                          |
+| MediaPipe  | Chosen for real-time efficiency in hand tracking over alternatives like OpenPose.                                                                           |
+| DeepSORT   | Chosen for efficient multi-object tracking across frames, offering improved accuracy and consistency over SORT.                                             |
+| CLIP       | Employed for superior semantic visual similarity compared to traditional feature extraction methods (SIFT, SURF).                                           |
+| FAISS      | Utilized for high-performance similarity indexing and rapid retrieval of visual embeddings, outperforming simpler indexing methods like brute-force search. |
+| SAM        | Chosen for zero-shot segmentation flexibility compared to traditional segmentation methods like Mask R-CNN.                                                 |
+| Open3D     | Selected for comprehensive and easy-to-use 3D mesh processing and visualization capabilities compared to alternatives like MeshLab.                         |
+| Matplotlib | Chosen for its straightforward integration and visualization capabilities, especially useful for overlaying 3D meshes onto images.                          |
+| PIL/OpenCV | Employed for versatile image processing functionalities, offering ease of use, broad compatibility, and robust performance for image manipulation tasks.    |
+
 
 ---
+
 
 ## 🚦 Implementation Phases
 
@@ -76,13 +78,30 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 
 ## ⚠️ Documented Failures & Fixes
 
-| Issue                                                        | Fix                                                                 |
-|--------------------------------------------------------------|----------------------------------------------------------------------|
-| ❌ SAM failed when clicked manually                           | ✅ Replaced with YOLO-detected bbox center as SAM input              |
-| ❌ Ring appeared floating or sideways in 3D                   | ✅ Added finger direction vector from two landmarks for rotation     |
-| ❌ Open3D render gave white screen                            | ✅ Adjusted axis limits and zoom to focus on ring joint              |
-| ❌ Blank overlay due to incorrect image coordinate transform  | ✅ Corrected Y-axis orientation to match OpenCV coordinate system     |
-| ❌ MediaPipe failed on some hand poses                        | ✅ Enabled `static_image_mode=True` to ensure frame-by-frame detection |
+| Issue                                                       | Fix                                                                   |
+| ----------------------------------------------------------- | --------------------------------------------------------------------- |
+| ❌ SAM failed when clicked manually                          | ✅ Replaced with YOLO-detected bbox center as SAM input                |
+| ❌ Ring appeared floating or sideways in 3D                  | ✅ Added finger direction vector from two landmarks for rotation       |
+| ❌ Open3D render gave white screen                           | ✅ Adjusted axis limits and zoom to focus on ring joint                |
+| ❌ Blank overlay due to incorrect image coordinate transform | ✅ Corrected Y-axis orientation to match OpenCV coordinate system      |
+| ❌ MediaPipe failed on some hand poses                       | ✅ Enabled `static_image_mode=True` to ensure frame-by-frame detection |
+
+---
+
+## Experimental Failures and Decisions
+- Novel view synthesis methods (NeRF) were too computationally intensive; deprioritized for immediate development.
+
+## Iterative Improvements
+- Optimized MediaPipe performance with batch processing and GPU acceleration.
+- Improved segmentation accuracy through SAM prompt refinement.
+- Enhanced mesh fitting accuracy through iterative algorithm tuning.
+
+## Project Scope
+- Successfully covers detection, segmentation, tracking, and basic 3D visualization.
+
+## Limitations
+- Does not include detailed clustering or novel view synthesis.
+- Lacks comprehensive 3D hand/body rigging.
 
 ---
 
@@ -98,8 +117,8 @@ Both datasets were YOLOv8 formatted and used for training a 3-class detection mo
 
 ## 🔜 Future Work
 
-| Feature                                     | Priority |
-|---------------------------------------------|----------|
+| Feature                                    | Priority |
+| ------------------------------------------ | -------- |
 | Add earring and dress segmentation via SAM | High     |
 | Fit 3D meshes for earrings and tiaras      | Medium   |
 | Animate ring fitting or rotation (Open3D)  | Medium   |
