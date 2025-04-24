@@ -1,4 +1,4 @@
-# 💎 Jewelry Tracking AI – Multimodal Computer Vision & AR System
+# 💎 JewelSense – Multimodal Computer Vision & AR System
 
 This project is an end-to-end AI pipeline designed to detect, track, search, and fit jewelry items — specifically **rings**, **earrings**, and **dresses** — using state-of-the-art computer vision, 3D modeling, and multimodal tools like CLIP and SAM. It now includes 3D mesh fitting and AR-style visualization of rings placed on hands.
 
