@@ -1,52 +1,73 @@
-# 💎 Jewelry Tracking AI
+# 💎 Jewelry Tracking AI – End-to-End Computer Vision System
 
-A modular, end-to-end AI system for detecting, tracking, and visually matching jewelry (rings, earrings, necklaces, dresses, etc.) using cutting-edge computer vision and multimodal AI tools.
+This project builds a modular, intelligent system to detect, track, and visually search for jewelry items (rings, earrings) and fashion elements (dresses) using AI.  
+It combines hand tracking, object detection, video tracking, and CLIP-based similarity search.  
+Developed with clean architecture, open datasets, and extensibility in mind.
 
 ---
 
-## 📌 Features
+## 📌 Project Scope
 
-- ✅ Finger & jewelry tracking using MediaPipe + YOLOv8
-- ✅ Multi-class object detection (ring, earring, tiara, dress, etc.)
-- ✅ DeepSORT-based video tracking
-- ✅ CLIP-powered visual similarity search (image & text)
-- ✅ JSON export of detection data
-- ✅ Modular, production-ready codebase
-- ✅ Clean Roboflow integration for jewelry + dress datasets
-- ✅ Easy to extend with 3D modeling, SAM, or LLMs
+A complete pipeline that:
+- Detects jewelry & dress items (`ring`, `earring`, `dress`)
+- Tracks jewelry items over video using DeepSORT
+- Provides visual similarity search using CLIP (image & text)
+- Exports results as annotated images, videos, and JSON logs
+- Uses Roboflow public datasets and trained with YOLOv8
+
+---
+
+## ✅ What Has Been Done
+
+| Feature                                      | Status   |
+|---------------------------------------------|----------|
+| Hand & finger detection using MediaPipe     | ✅ Done  |
+| Jewelry detection (ring, earring, dress)    | ✅ Done  |
+| Video tracking using DeepSORT               | ✅ Done  |
+| JSON export of detections                   | ✅ Done  |
+| CLIP-based visual search (image ↔ image)    | ✅ Done  |
+| CLIP-based prompt search (text ↔ image)     | ✅ Done  |
+| Dataset: Jewelry + Dress from Roboflow      | ✅ Done  |
+| Google Colab training on 3-class YOLOv8     | ✅ Done  |
+| Modular architecture + visualizations       | ✅ Done  |
+| Design + README documentation               | ✅ Done  |
+
+---
+
+## 🔜 What Remains / Future Work
+
+| Task                                        | Planned   |
+|---------------------------------------------|-----------|
+| SAM-based jewelry segmentation              | 🔜 Next   |
+| 3D hand modeling (e.g., MANO, Blender)      | 🔜 Next   |
+| Fitting ring meshes to fingers              | 🔜 Next   |
+| LLM-based search (e.g., GPT jewelry prompts)| 🔜 Next   |
+| Streamlit / FastAPI frontend                | 🔜 Next   |
 
 ---
 
 ## 📂 Datasets Used
 
-- [Jewellery Detection Dataset](https://universe.roboflow.com/mpstme-k5t7r/jewellery_detect/model/17)
-- [Dress Detection Dataset](https://universe.roboflow.com/jian-james-astrero/dress-dataset/dataset/4/download)
-- Downloaded and formatted using Roboflow Python API
-- Trained using Ultralytics YOLOv8 in Google Colab
+- [💍 Jewelry Detection Dataset (Roboflow)](https://universe.roboflow.com/mpstme-k5t7r/jewellery_detect/model/17)
+- [👗 Dress Detection Dataset (Roboflow)](https://universe.roboflow.com/jian-james-astrero/dress-dataset/dataset/4/download)
+- Format: YOLOv8 — used to train a single multi-class model on 3 classes
 
 ---
 
-## 📁 Folder Structure
+## 🧠 Tools & Frameworks
 
-```
-jewelry-tracking-ai/
-├── models/                 # Hand tracking (MediaPipe)
-├── detectors/              # Jewelry detection (YOLOv8)
-├── trackers/               # Object tracking (DeepSORT)
-├── pipeline/               # Full video inference pipeline
-├── clip_search/            # CLIP-based image & text search
-├── data/                   # Roboflow dataset (train/val/test)
-├── output/                 # Saved results (images, videos, JSON)
-├── config/                 # Dataset YAML configs
-├── main.py                 # Image inference entry point
-├── run_video.py            # Video tracking entry point
-├── requirements.txt        # Python dependencies
-└── README.md
-```
+- YOLOv8 (Ultralytics) – multi-class object detection
+- MediaPipe – hand landmark detection (21 points)
+- DeepSORT – consistent tracking across frames
+- CLIP (OpenAI) – visual & text similarity
+- FAISS – fast similarity search
+- Matplotlib – result visualization
+- Roboflow API – dataset loading
+- Google Colab – model training
 
 ---
 
-## 🚀 Getting Started
+## 🚀 How to Run
 
 ### 1. Install Dependencies
 
@@ -54,71 +75,57 @@ jewelry-tracking-ai/
 pip install -r requirements.txt
 ```
 
-### 2. Prepare Dataset
+### 2. Run Object Detection
 
-Place Roboflow YOLOv8-format dataset under:
-
-```
-data/train
-data/val
-data/test
-```
-
-### 3. Run Detection & Tracking
-
-#### 🖼️ Image Inference
 ```bash
 python main.py
 ```
 
-#### 🎥 Video Tracking
+### 3. Run Video Tracking
+
 ```bash
 python run_video.py
 ```
 
----
+### 4. Build CLIP Index (Visual Search)
 
-## 🔍 CLIP Visual Similarity Search
-
-### Build Embedding Index
 ```bash
 python clip_search/embed_dataset.py
 ```
 
-### Search by Image
+### 5. Search by Image or Text
+
 ```bash
 python clip_search/search_similar.py
-# Uses "query.jpg" by default
-```
-
-### Search by Text Prompt
-```python
-search_by_text("gold ring with emerald")
+# OR
+search_by_text("gold ring with diamond")
 ```
 
 ---
 
-## 🧠 Models & Tools Used
+## 📦 Folder Structure
 
-- MediaPipe Hands – hand landmark tracking
-- YOLOv8 – object detection (Ultralytics)
-- DeepSORT – tracking across video frames
-- CLIP – visual + text embedding model (OpenAI)
-- FAISS – similarity search engine
-- Roboflow – dataset hosting and download API
-- (Optional) SAM, MANO, LLaVA – segmentation, 3D modeling, vision-LM
-
----
-
-## 🔮 Future Work
-
-- Phase 3: Fit 3D ring mesh to hand joints
-- Prompt-based jewelry suggestions using GPT or LLaVA
-- Smart filters by style, material, design tags
-- Deploy UI with Streamlit or FastAPI
+```
+jewelry-tracking-ai/
+├── models/           → MediaPipe-based hand tracker
+├── detectors/        → YOLOv8 object detection
+├── trackers/         → DeepSORT tracking logic
+├── pipeline/         → Video pipeline integration
+├── clip_search/      → CLIP + FAISS visual search
+├── output/           → Saved results (images/videos/json)
+├── data/             → Roboflow datasets (YOLOv8 format)
+├── main.py           → Run on image
+├── run_video.py      → Run on video
+└── requirements.txt
+```
 
 ---
 
 ## 📄 License
 
-MIT — feel free to use, modify, and build on it!
+MIT License – free to use, extend, and deploy in commercial or research use cases.
+
+---
+
+**Author**: Syed Abdul Rafey Ali  
+**Status**: 💯 Production-ready with future research potential

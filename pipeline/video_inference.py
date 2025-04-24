@@ -9,7 +9,7 @@ def run_video_inference(video_path, output_path,
     CLASS_NAMES = ['ring', 'earring', 'dress']
 
     cap = cv2.VideoCapture(video_path)
-    detector = JewelryDetector(model_path=model_path, class_names=class_names)
+    detector = JewelryDetector(model_path=model_path, class_names=CLASS_NAMES)
     tracker = JewelryTracker()
 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
