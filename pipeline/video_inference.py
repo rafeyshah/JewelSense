@@ -2,6 +2,9 @@ import cv2
 import os
 from detectors.jewelry_detector import JewelryDetector
 from trackers.jewelry_tracker import JewelryTracker
+from models.hand_tracker import HandTracker
+
+
 
 
 def run_video_inference(video_path, output_path,
@@ -14,15 +17,21 @@ def run_video_inference(video_path, output_path,
 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = None
+    
+    hand_tracker = HandTracker()
 
     frame_idx = 0
     while cap.isOpened():
         ret, frame = cap.read()
-        if not ret:
+        if not ret or frame is None:
+            print("[✓] End of video reached or invalid frame.")
             break
 
-        # frame = cv2.resize(frame, (640, 480))
+        # Process hands
+        landmarks = hand_tracker.process_image(frame)
+        frame = hand_tracker.draw_landmarks(frame, landmarks)
 
+        # Detect + track
         detections = detector.detect(frame)
         tracked = tracker.update(detections, frame)
 

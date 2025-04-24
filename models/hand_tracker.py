@@ -5,7 +5,7 @@ class HandTracker:
     def __init__(self, max_num_hands=2, detection_confidence=0.7, tracking_confidence=0.6):
         self.max_num_hands = max_num_hands
         self.hands = mp.solutions.hands.Hands(
-            static_image_mode=True,
+            static_image_mode=False,
             max_num_hands=self.max_num_hands,
             min_detection_confidence=detection_confidence,
             min_tracking_confidence=tracking_confidence
