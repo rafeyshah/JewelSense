@@ -103,6 +103,22 @@ jewelry-tracking-ai/
 ├── README.md, design_doc.md    ← Documentation
 ```
 
+## 📹 Demo Videos
+
+Explore JewelSense in action through the following demo recordings:
+
+- 🔍 **Detection & Tracking**  
+  [Watch on Loom](https://www.loom.com/share/9936c0e8e7d44c7fa0081af41a146232?sid=ab3230e9-f9b9-4902-a15f-01ae4bf43f8c)
+
+- 💍 **Hand Bug Removed**  
+  [Watch on Loom](https://www.loom.com/share/9c3dd0216b194685ae47c94377bcacb5?sid=6fcc7217-5cb5-4c3c-b7bb-31d0fce7a872)
+
+- 🧠 **CLIP-Based Similarity Search**  
+  [Watch on Loom](https://www.loom.com/share/df1304450a224dfb9eb7c39bed89dd7b?sid=0b806553-5e45-4ec3-9d37-0e6c143cc47a)
+
+- 🧩 **Style Clustering with CLIP + KMeans**  
+  [Watch on Loom](https://www.loom.com/share/7c6c5f4ab87b44bdae388b876ce60882?sid=78e57a51-5f0c-4413-b27c-2b69cfe371b0)
+
 
 ## 🔜 Upcoming Features (Planned)
 
